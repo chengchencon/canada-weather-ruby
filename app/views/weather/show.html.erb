@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Weather Forecast</title>
+  <%= stylesheet_link_tag 'application', media: 'all' %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+</head>
+<body>
+  <!-- Navigation Bar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">Canada Weather Forecast</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="<%= root_path %>">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="#">Weather Forecast</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="<%= contact_path %>">About Us</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <div class="container mt-5 ">
+    <h1 class="display-4 centered">Weather Forecast</h1>
+    <p class="lead">Select a province to get the weather forecast.</p>
+
+    <!-- Weather Form -->
+    <%= form_with url: weather_path, method: :get, local: false do |form| %>
+      <div class="form-group">
+        <%= form.label :state, "Province" %>
+        <%= form.select :state, options_for_select(
+          [
+            'Select a province or territory',
+            'Alberta',
+            'British Columbia',
+            'Manitoba',
+            'New Brunswick',
+            'Newfoundland and Labrador',
+            'Nova Scotia',
+            'Ontario',
+            'Prince Edward Island',
+            'Quebec',
+            'Saskatchewan',
+            'Northwest Territories',
+            'Nunavut',
+            'Yukon'
+          ],
+          @state
+        ), {}, { id: 'province-select', class: 'form-control' } %>
+      </div>
+
+        <div class="form-group">
+          <%= form.label :city, "City" %>
+          <%= form.select :city, options_for_select(
+            ['Select a city first'],
+            selected: @city
+          ), {}, { class: 'form-control', id: 'city-select', "data-selected-city": @city } %>
+        </div>
+
+      <%= form.submit "Get Weather", class: 'btn btn-primary mt-3' %>
+    <% end %>
+
+      <% if @weather_data && @weather_data["main"].present? %>
+          <div class="mt-4 d-flex justify-content-center " id="weather-info" style="display: block;">
+            <!-- Weather Card -->
+            <div class="card text-white bg-primary mb-3 " style="max-width: 30rem;">
+              <div class="card-header">
+                <h4 class="card-title">Weather in <%= @city %>, <%= @state %></h4>
+              </div>
+              <div class="card-body">
+                <h5 class="card-title">Current Weather</h5>
+                <p class="card-text">
+                  <strong>Temperature:</strong> <%= @weather_data["main"]["temp"] %>°C <br>
+                  <strong>Weather:</strong> <%= @weather_data["weather"].first["description"] %> <br>
+                  <strong>Humidity:</strong> <%= @weather_data["main"]["humidity"] %>% <br>
+                  <strong>Wind Speed:</strong> <%= @weather_data["wind"]["speed"] %> m/s
+                </p>
+              </div>
+
+
+              <div class="card-footer text-center">
+                <button class="btn btn-outline-light" onclick="showAlert()">Get More Info</button>
+              </div>
+            </div>
+          </div>
+
+        <% else %>
+          <p></p>
+        <% end %>
+
+  </div>
+
+  <!-- Footer -->
+  <footer class="bg-dark text-white text-center p-4 mt-5">
+    <p>&copy; 2025 Canada Weather Forecast | All rights reserved</p>
+  </footer>
+
+
+
+<script>
+
+ function showAlert() {
+    alert('In development!');
+  }
+  document.addEventListener("DOMContentLoaded", function() {
+    const provinceSelect = document.getElementById("province-select");
+    const citySelect = document.getElementById("city-select");
+
+    const cities = {
+      "Alberta": [
+        "Calgary", "Edmonton", "Red Deer", "Lethbridge", "Medicine Hat", "Grande Prairie",
+        "Airdrie", "Spruce Grove", "Leduc", "Lloydminster", "Fort McMurray", "Okotoks",
+        "Camrose", "Chestermere", "Brooks"
+      ],
+      "British Columbia": [
+        "Vancouver", "Victoria", "Kelowna", "Abbotsford", "Nanaimo", "Kamloops",
+        "Chilliwack", "Prince George", "Courtenay", "Burnaby", "Richmond", "Surrey",
+        "Coquitlam", "Maple Ridge", "Langley"
+      ],
+      "Manitoba": [
+        "Winnipeg", "Brandon", "Steinbach", "Thompson", "Portage la Prairie", "Winkler",
+        "Selkirk", "Morden", "Dauphin", "Flin Flon", "The Pas", "Altona", "Niverville",
+        "Stonewall", "Beausejour"
+      ],
+      "New Brunswick": [
+        "Fredericton", "Moncton", "Saint John", "Bathurst", "Miramichi", "Edmundston",
+        "Dieppe", "Campbellton", "Oromocto", "Shediac", "Quispamsis", "Grand Falls",
+        "Rothesay", "Sussex", "Bouctouche"
+      ],
+      "Newfoundland and Labrador": [
+        "St. John's", "Corner Brook", "Mount Pearl", "Gander", "Grand Falls-Windsor",
+        "Happy Valley-Goose Bay", "Labrador City", "Marystown", "Bay Roberts", "Clarenville",
+        "Stephenville", "Conception Bay South", "Carbonear", "Channel-Port aux Basques",
+        "Bonavista"
+      ],
+      "Nova Scotia": [
+        "Halifax", "Sydney", "Truro", "New Glasgow", "Glace Bay", "Kentville", "Amherst",
+        "Bridgewater", "Yarmouth", "Wolfville", "Antigonish", "Lunenburg", "Digby",
+        "Shelburne", "Liverpool"
+      ],
+      "Ontario": [
+        "Toronto", "Ottawa", "Mississauga", "Brampton", "Hamilton", "London", "Markham",
+        "Vaughan", "Kitchener", "Windsor", "Richmond Hill", "Burlington", "Oshawa",
+        "St. Catharines", "Guelph"
+      ],
+      "Prince Edward Island": [
+        "Charlottetown", "Summerside", "Stratford", "Cornwall", "Montague", "Kensington",
+        "Souris", "Alberton", "Tignish", "Georgetown", "Borden-Carleton", "O'Leary",
+        "Murray River", "Crapaud", "Tyne Valley"
+      ],
+      "Quebec": [
+        "Montreal", "Quebec City", "Laval", "Gatineau", "Longueuil", "Sherbrooke", "Saguenay",
+        "Levis", "Trois-Rivieres", "Terrebonne", "Saint-Jean-sur-Richelieu", "Repentigny",
+        "Drummondville", "Saint-Jerome", "Granby"
+      ],
+      "Saskatchewan": [
+        "Regina", "Saskatoon", "Prince Albert", "Moose Jaw", "Yorkton", "Swift Current",
+        "North Battleford", "Estevan", "Weyburn", "Melfort", "Martensville", "Lloydminster",
+        "Humboldt", "Kindersley", "Rosthern"
+      ],
+      "Northwest Territories": [
+        "Yellowknife", "Hay River", "Inuvik", "Fort Smith", "Norman Wells", "Behchoko",
+        "Fort Simpson", "Tuktoyaktuk", "Aklavik", "Fort McPherson", "Lutselk'e", "Deline",
+        "Kakisa", "Tulita", "Fort Resolution"
+      ],
+      "Nunavut": [
+        "Iqaluit", "Rankin Inlet", "Arviat", "Baker Lake", "Cambridge Bay", "Pangnirtung",
+        "Cape Dorset", "Igloolik", "Gjoa Haven", "Kugluktuk", "Pond Inlet", "Coral Harbour",
+        "Chesterfield Inlet", "Repulse Bay", "Hall Beach"
+      ],
+      "Yukon": [
+        "Whitehorse", "Dawson City", "Watson Lake", "Haines Junction", "Carcross", "Faro",
+        "Mayo", "Teslin", "Burwash Landing", "Ross River", "Pelly Crossing", "Old Crow",
+        "Beaver Creek", "Destruction Bay", "Tagish"
+      ]
+    };
+
+
+    provinceSelect.addEventListener("change", function() {
+      const selectedProvince = provinceSelect.value;
+      citySelect.innerHTML = ""; // 清空当前选项
+
+      if (cities[selectedProvince]) {
+        cities[selectedProvince].forEach(city => {
+          const option = document.createElement("option");
+          option.value = city;
+          option.textContent = city;
+          citySelect.appendChild(option);
+        });
+      }
+    });
+
+function updateCityOptions(selectedState) {
+    citySelect.innerHTML = ""; // 清空旧选项
+    if (selectedState in cities) {
+      cities[selectedState].forEach(city => {
+        let option = document.createElement("option");
+        option.value = city;
+        option.textContent = city;
+        citySelect.appendChild(option);
+      });
+    } else {
+      let defaultOption = document.createElement("option");
+      defaultOption.textContent = "Select a city first";
+      citySelect.appendChild(defaultOption);
+    }
+  }
+
+  // 监听 state 选择变化
+  provinceSelect.addEventListener("change", function () {
+    updateCityOptions(this.value);
+  });
+
+  // **页面加载时恢复 city 选项**
+  if (provinceSelect.value in cities) {
+    updateCityOptions(provinceSelect.value);
+    // **确保 city 选项保持选中**
+    if (citySelect.dataset.selectedCity) {
+      citySelect.value = citySelect.dataset.selectedCity;
+    }
+  }
+
+
+
+
+
+
+  });
+</script>
+
+
+
+</body>
+</html>

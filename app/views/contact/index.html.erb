@@ -1,0 +1,70 @@
+<!-- app/views/contact/index.html.erb -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Us</title>
+  <%= stylesheet_link_tag 'application', media: 'all' %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+</head>
+<body>
+  <!-- Navigation Bar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">Canada Weather Forecast</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="<%= root_path %>">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="<%= weather_path %>">Weather Forecast</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" href="<%= contact_path %>">About Us</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <div class="container mt-5">
+    <h1 class="display-4">About Us</h1>
+    <p class="lead">We'd love to hear from you! Feel free to get in touch through any of the methods below.</p>
+
+    <!-- Contact Information -->
+    <h3>Email</h3>
+    <p>You can reach us via email at <a href="mailto:support@canadaweather.com">support@canadaweather.com</a></p>
+
+    <h3>Phone</h3>
+    <p>Our customer service team is available Monday to Friday, 9:00 AM to 5:00 PM EST. Call us at +1 (123) 456-7890.</p>
+
+    <h3>Social Media</h3>
+    <p>Follow us on social media to stay updated on the latest news:</p>
+    <ul>
+      <li><a href="https://facebook.com/canadaweather" target="_blank">Facebook</a></li>
+      <li><a href="https://twitter.com/canadaweather" target="_blank">Twitter</a></li>
+      <li><a href="https://instagram.com/canadaweather" target="_blank">Instagram</a></li>
+    </ul>
+
+    <h3>Office Location</h3>
+    <p>Our office is located at:</p>
+    <address>
+      Canada Weather Forecast<br>
+      123 Weather Lane, Suite 456<br>
+      Toronto, ON, M5J 2N8<br>
+      Canada
+    </address>
+  </div>
+
+  <!-- Footer -->
+  <footer class="bg-dark text-white text-center p-4 mt-5">
+    <p>&copy; 2025 Canada Weather Forecast | All rights reserved</p>
+  </footer>
+</body>
+</html>
