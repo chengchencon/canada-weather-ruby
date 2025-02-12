@@ -1,5 +1,8 @@
 source "https://rubygems.org"
 
+
+gem 'mini_racer'
+
 gem "sinatra"
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 8.0.1"
